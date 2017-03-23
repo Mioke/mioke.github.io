@@ -1,3 +1,7 @@
+---
+layout: post
+---
+
 ## Mac OS下安装及配置nginx
 
 ### 安装包

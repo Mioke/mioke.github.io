@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-03-23T17:45:30+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
+</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2017/03/22/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-03-22T17:02:09+08:00</published><updated>2017-03-22T17:02:09+08:00</updated><id>http://localhost:4000/jekyll/update/2017/03/22/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2017/03/22/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry><entry><title type="html">Nginx Depoloyment On Mac Os</title><link href="http://localhost:4000/2017/03/22/Nginx-depoloyment-on-Mac-OS.html" rel="alternate" type="text/html" title="Nginx Depoloyment On Mac Os" /><published>2017-03-22T00:00:00+08:00</published><updated>2017-03-22T00:00:00+08:00</updated><id>http://localhost:4000/2017/03/22/Nginx-depoloyment-on-Mac-OS</id><content type="html" xml:base="http://localhost:4000/2017/03/22/Nginx-depoloyment-on-Mac-OS.html">&lt;h2 id=&quot;mac-os下安装及配置nginx&quot;&gt;Mac OS下安装及配置nginx&lt;/h2&gt;
+
+&lt;h3 id=&quot;安装包&quot;&gt;安装包&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;下载 Nginx 源码包&lt;/p&gt;
+
+    &lt;p&gt;下载页: http://nginx.org/en/download.html&lt;/p&gt;
+
+    &lt;p&gt;当前稳定版本: http://nginx.org/download/nginx-1.8.1.tar.gz&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;zlib&lt;/p&gt;
+
+    &lt;p&gt;下载页: http://zlib.net/&lt;/p&gt;
+
+    &lt;p&gt;当前稳定版本: http://zlib.net/zlib-1.2.8.tar.gz&lt;/p&gt;
+
+    &lt;p&gt;注: Nginx 参考文档中提到需要 1.1.3 以上版本的 zlib&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;pcre&lt;/p&gt;
+
+    &lt;p&gt;下载页: http://www.pcre.org/&lt;/p&gt;
+
+    &lt;p&gt;当前稳定版本: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz&lt;/p&gt;
+
+    &lt;p&gt;注: Nginx 参考文档中提到需要 4.4 以上版本的 pcre&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;配置及安装&quot;&gt;配置及安装&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;First, 进入到包所在的文件夹内&lt;/strong&gt;
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tar zxvf zlib-1.2.8.tar.gz  # 得到 zlib-1.2.8 目录
+tar zxvf pcre-8.36.tar.gz  # 得到 pcre-8.36 目录
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;编译安装 Nginx&lt;/p&gt;
+
+    &lt;p&gt;这里会将各依赖的源码编译进 Nginx, 所以 –with-zlib 和 –with-pcre 后为对应的依赖源码目录路径。此外, 编译选项中还开启了 HTTPS 的协议支持–with-http_ssl_module, 若不需要 HTTPS, 可取消该选项。&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  tar zxvf nginx-1.8.0.tar.gz
+  cd nginx-1.8.0
+  ./configure --prefix=/usr/local/nginx --with-zlib=../zlib-1.2.8 --with-pcre=../pcre-8.36
+  make
+  sudo make install
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;其他安装指令（可做了解）
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  nginx大部分常用模块，编译时./configure --help以--without开头的都默认安装。
+    
+  --prefix=PATH ： 指定nginx的安装目录。默认 /usr/local/nginx
+  --conf-path=PATH ： 设置nginx.conf配置文件的路径。nginx允许使用不同的配置文件启动，通过命令行中的-c选项。默认为prefix/conf/nginx.conf
+  --user=name： 设置nginx工作进程的用户。安装完成后，可以随时在nginx.conf配置文件更改user指令。默认的用户名是nobody。--group=name类似
+  --with-pcre ： 设置PCRE库的源码路径，如果已通过yum方式安装，使用--with-pcre自动找到库文件。使用--with-pcre=PATH时，需要从PCRE网站下载pcre库的源码（版本4.4 - 8.30）并解压，剩下的就交给Nginx的./configure和make来完成。perl正则表达式使用在location指令和 ngx_http_rewrite_module模块中。
+  --with-zlib=PATH ： 指定 zlib（版本1.1.3 - 1.2.5）的源码解压目录。在默认就启用的网络传输压缩模块ngx_http_gzip_module时需要使用zlib 。
+  --with-http_ssl_module ： 使用https协议模块。默认情况下，该模块没有被构建。前提是openssl与openssl-devel已安装
+  --with-http_stub_status_module ： 用来监控 Nginx 的当前状态
+  --with-http_realip_module ： 通过这个模块允许我们改变客户端请求头中客户端IP地址值(例如X-Real-IP 或 X-Forwarded-For)，意义在于能够使得后台服务器记录原始客户端的IP地址
+  --add-module=PATH ： 添加第三方外部模块，如nginx-sticky-module-ng或缓存模块。每次添加新的模块都要重新编译（Tengine可以在新加入module时无需重新编译）
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;p&gt;比如：&lt;/p&gt;
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ./configure \
+  &amp;gt; --prefix=/usr \
+  &amp;gt; --sbin-path=/usr/sbin/nginx \
+  &amp;gt; --conf-path=/etc/nginx/nginx.conf \
+  &amp;gt; --error-log-path=/var/log/nginx/error.log \
+  &amp;gt; --http-log-path=/var/log/nginx/access.log \
+  &amp;gt; --pid-path=/var/run/nginx/nginx.pid  \
+     &amp;gt; --lock-path=/var/lock/nginx.lock \   
+  &amp;gt; --user=nginx \
+  &amp;gt; --group=nginx \
+  &amp;gt; --with-http_ssl_module \
+  &amp;gt; --with-http_stub_status_module \
+  &amp;gt; --with-http_gzip_static_module \
+  &amp;gt; --http-client-body-temp-path=/var/tmp/nginx/client/ \
+  &amp;gt; --http-proxy-temp-path=/var/tmp/nginx/proxy/ \
+  &amp;gt; --http-fastcgi-temp-path=/var/tmp/nginx/fcgi/ \
+  &amp;gt; --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
+  &amp;gt; --with-pcre=../pcre-7.8
+  &amp;gt; --with-zlib=../zlib-1.2.3
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;设置监听&quot;&gt;设置监听&lt;/h3&gt;
+
+&lt;p&gt;进入配置文件/usr/local/nginx/conf/nginx.conf ，修改listen下参数：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;server {
+        listen       85;            #监听端口
+        server_name  localhost;     #监听服务器
+
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;启动nginx&quot;&gt;启动nginx&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd /usr/local/nginx
+
+#启动
+sudo sbin/nginx     #浏览器访问 127.0.0.1 测试是否成功启动
+
+#重启
+sudo sbin/nginx -s reload
+
+#停止
+sudo sbin/nginx -s stop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;修改返回值&quot;&gt;修改返回值&lt;/h3&gt;
+
+&lt;p&gt;以bandwidth请求：&lt;/p&gt;
+
+&lt;p&gt;http://127.0.0.1:8001/v2/bandwidth&lt;/p&gt;
+
+&lt;p&gt;按照请求的格式创建目录为：/usr/local/nginx/html/v2/ &lt;br /&gt;
+（/usr/local/nginx/html/为默认目录,/v2/为根据请求格式新建的目录）&lt;/p&gt;
+
+&lt;p&gt;新建bandwidth文件，则文件路径为/usr/local/nginx/html/v2/bandwidth，写入返回值，则构造指定返回报文成功，可按照自己需求进行编辑；&lt;/p&gt;
+
+&lt;p&gt;然后在浏览器中请求这个接口，返回自定义的内容则配置成功。&lt;/p&gt;</content><author><name></name></author><summary type="html">Mac OS下安装及配置nginx</summary></entry></feed>
