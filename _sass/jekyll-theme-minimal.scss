@@ -233,6 +233,7 @@ header ul a strong {
 
 section {
   width:500px;
+  max-width: 100%;
   float:left;
   margin-left: 400px;
   padding-bottom:50px;
@@ -271,7 +272,7 @@ footer {
   } 
   footer {
     float:left;
-    position:fixed;
+    position:static;
     width:auto;
   }
 
