@@ -422,7 +422,8 @@ header ul a strong {
 
 section {
   width: 500px;
-  float: right;
+  float: left;
+  margin-left: 360px;
   padding-bottom: 50px; }
 
 small {
@@ -457,7 +458,7 @@ footer {
     width: auto; }
 
   header {
-    padding-right: 320px; }
+    padding-right: 200px; }
 
   section {
     border: 1px solid #e5e5e5;
