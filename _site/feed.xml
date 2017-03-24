@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-03-24T17:38:19+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-03-24T18:06:07+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
 </subtitle><entry><title type="html">Transmissioin Between Weex And Ios Native</title><link href="http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native.html" rel="alternate" type="text/html" title="Transmissioin Between Weex And Ios Native" /><published>2017-03-24T00:00:00+08:00</published><updated>2017-03-24T00:00:00+08:00</updated><id>http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native</id><content type="html" xml:base="http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native.html">&lt;h2 id=&quot;weex-与-ios-native-的传输&quot;&gt;Weex 与 iOS Native 的传输&lt;/h2&gt;
 
 &lt;p&gt;在使用Weex时，我们经常需要数据和事件与native之间的交互，多发生于界面事件和数据传输。举个很简单的例子，Weex page中一项内购的页面，需要显示Apple store的价格，此时需要native从服务器拿到价格后发送给weex page做显示。这个过程包括weex发送请求到本地，本地处理回调等。&lt;/p&gt;
@@ -15,6 +15,7 @@
 &lt;/div&gt;
 
 &lt;p&gt;JS端就可以通过注册的类其中的方法，来发起一个Event：&lt;/p&gt;
+
 &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;weex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;requireModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'mediator'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sendRequestData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'pluginA'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'native'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt;
@@ -32,41 +33,41 @@
 &lt;p&gt;Native端可有两种方式传递events至Weex。&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;通过WXSDKManager提供的fireEvent:ref:type:params:domChanges:方法。
-用这个方法可以在weex page上监听到事件，如：
-```xml
-[[WXSDKManager bridgeMgr] fireEvent:targetWX.InstanceId
-                             ref:@”_root” 
-                            type:@”nativetransport”
-                          params:paramsAddCallback
-                      domChanges:nil];
-——————
-    &lt;h1 id=&quot;weex-page&quot;&gt;weex page&lt;/h1&gt;
+  &lt;li&gt;通过WXSDKManager提供的fireEvent:ref:type:params:domChanges:方法。用这个方法可以在weex page上监听到事件，如
+    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WXSDKManager&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bridgeMgr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fireEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetWX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InstanceId&lt;/span&gt;
+                             &lt;span class=&quot;nf&quot;&gt;ref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;_root&quot;&lt;/span&gt; 
+                            &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;nativetransport&quot;&lt;/span&gt;
+                          &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;paramsAddCallback&lt;/span&gt;
+                      &lt;span class=&quot;n&quot;&gt;domChanges&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;template&gt;
-	&lt;text onClick=&quot;onClick&quot; onnativetransport=&quot;&quot; id=&quot;text1&quot;&gt;callback: &lt;/text&gt;
-&lt;/template&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;template&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;text&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onClick=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'onClick'&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onnativetransport=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'text1'&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;callback: &lt;span class=&quot;nt&quot;&gt;&amp;lt;/text&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/template&amp;gt;&lt;/span&gt;
 
-&lt;script&gt;
-	# 上略
-	nativeTransport: function(e) {
-		console.log(e)
-	}
-&lt;/script&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;上略&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;nativeTransport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-  通过fireGlobalEvent:params:方法
+&lt;ul&gt;
+  &lt;li&gt;通过fireGlobalEvent:params:方法
 这个方法其实是发送一个全局通知，所有已存在的Weex page都能接收到这个Event，但前提是Weex page初始化时注册listener。
-```js
-var globalEvent = require('@weex-module/globalEvent')
-globalEvent.addEventListener(&quot;nativetransport&quot;, (e) =&amp;gt; {
-	console.log(e)
-	this.result = &quot;native send a request&quot;
-})
+    &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;globalEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'@weex-module/globalEvent'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;globalEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;nativetransport&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;native send a request&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;这时native调用&lt;code class=&quot;highlighter-rouge&quot;&gt;fireEvent&lt;/code&gt;就可以触发这个监听事件。&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;p&gt;这时native调用&lt;code class=&quot;highlighter-rouge&quot;&gt;fireEvent&lt;/code&gt;就可以触发这个监听事件。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&quot;中间层&quot;&gt;中间层&lt;/h3&gt;
 &lt;p&gt;建立中间层的目的是统一对所有Weex page的events做转发，一来是方便做hook，二来是防止plugin与plugin之间互相直接调用产生耦合。如果没有统一的中间层和派发关系，想象一下维护过N个版本之后的杂乱无章的调用关系…&lt;/p&gt;

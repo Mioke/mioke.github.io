@@ -18,6 +18,7 @@ layout: post
 ```
 
 JS端就可以通过注册的类其中的方法，来发起一个Event：
+
 ```js
 var module = weex.requireModule('mediator');
 module.sendRequestData(data, 'pluginA', 'native', (ret) => {
@@ -34,28 +35,27 @@ JS端的function可以以参数传递给native并以block形式调用。这样�
 
 Native端可有两种方式传递events至Weex。
 
--  通过WXSDKManager提供的fireEvent:ref:type:params:domChanges:方法。
-用这个方法可以在weex page上监听到事件，如：
-```xml
+-  通过WXSDKManager提供的fireEvent:ref:type:params:domChanges:方法。用这个方法可以在weex page上监听到事件，如
+```objc
 [[WXSDKManager bridgeMgr] fireEvent:targetWX.InstanceId
                                 ref:@"_root" 
                                type:@"nativetransport"
                              params:paramsAddCallback
                          domChanges:nil];
-------------------
-# weex page
-
-<template>
-	<text onClick='onClick' onnativetransport="{{nativeTransport}}" id='text1'>callback: {{result}}</text>
-</template>
-
-<script>
-	# 上略
-	nativeTransport: function(e) {
-		console.log(e)
-	}
-</script>
 ```
+{% highlight html %}
+  <template>
+    <text onClick='onClick' onnativetransport="{{nativeTransport}}" id='text1'>callback: {{result}}</text>
+  </template>
+
+  <script>
+    # 上略
+    nativeTransport: function(e) {
+      console.log(e)
+    }
+  </script>
+{% endhighlight %}
+
 -  通过fireGlobalEvent:params:方法
 这个方法其实是发送一个全局通知，所有已存在的Weex page都能接收到这个Event，但前提是Weex page初始化时注册listener。
 ```js
