@@ -278,7 +278,7 @@ a:hover small {
   color: #777; }
 
 .wrapper {
-  width: 860px;
+  width: 100%;
   margin: 0 auto; }
 
 blockquote {
@@ -319,7 +319,7 @@ img {
   max-width: 100%; }
 
 header {
-  width: 200px;
+  width: 350px;
   float: left;
   position: fixed;
   -webkit-font-smoothing: subpixel-antialiased; }
@@ -363,6 +363,14 @@ header ul a:active {
 /**
  * Posts
  */
+.home {
+  width: 100%;
+  float: left; }
+
+.post-list {
+  width: 80%;
+  vertical-align: left; }
+
 .post-header {
   margin-top: -20px;
   margin-left: 0px;
@@ -372,7 +380,7 @@ header ul a:active {
   font-size: 36px;
   letter-spacing: -1px;
   line-height: 1;
-  width: 500px;
+  width: 100%;
   /*  @include media-query($on-laptop) {
       font-size: 36px;
     }*/ }
@@ -427,7 +435,7 @@ hr {
   margin: 0 0 20px; }
 
 footer {
-  width: 200px;
+  width: 30%;
   float: left;
   position: fixed;
   bottom: 50px;
@@ -438,9 +446,14 @@ footer {
     width: auto;
     margin: 0; }
 
-  header, section, footer {
-    float: none;
+  header {
+    float: left;
     position: static;
+    width: auto; }
+
+  footer {
+    float: left;
+    position: fixed;
     width: auto; }
 
   header {
@@ -450,7 +463,10 @@ footer {
     border: 1px solid #e5e5e5;
     border-width: 1px 0;
     padding: 20px 0;
-    margin: 0 0 20px; }
+    margin: 0 0 20px;
+    float: left;
+    width: auto;
+    position: static; }
 
   header a small {
     display: inline; }
@@ -479,7 +495,12 @@ footer {
     width: 99%; }
 
   header li, header ul li + li + li {
-    width: 33%; } }
+    width: 33%; }
+
+  footer {
+    width: 99%;
+    bottom: 60px;
+    position: static; } }
 @media print {
   body {
     padding: 0.4in;
