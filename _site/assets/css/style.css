@@ -319,7 +319,7 @@ img {
   max-width: 100%; }
 
 header {
-  width: 150px;
+  width: 200px;
   float: left;
   position: fixed;
   -webkit-font-smoothing: subpixel-antialiased; }
@@ -372,7 +372,7 @@ header ul a:active {
   font-size: 36px;
   letter-spacing: -1px;
   line-height: 1;
-  width: 700px;
+  width: 500px;
   /*  @include media-query($on-laptop) {
       font-size: 36px;
     }*/ }
@@ -427,7 +427,7 @@ hr {
   margin: 0 0 20px; }
 
 footer {
-  width: 150px;
+  width: 200px;
   float: left;
   position: fixed;
   bottom: 50px;
