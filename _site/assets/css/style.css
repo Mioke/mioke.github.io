@@ -421,7 +421,7 @@ header ul a strong {
   color: #222; }
 
 section {
-  width: 500px;
+  width: 50%;
   max-width: 100%;
   float: left;
   margin-left: 400px;
@@ -456,7 +456,7 @@ footer {
   footer {
     float: left;
     position: static;
-    width: auto; }
+    width: 99%; }
 
   header {
     padding-right: 200px; }
