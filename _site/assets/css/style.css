@@ -265,6 +265,9 @@ a {
   color: #39c;
   text-decoration: none; }
 
+header h1 a {
+  color: #000000; }
+
 a:hover {
   color: #069; }
 
