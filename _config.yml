@@ -18,12 +18,10 @@ email: mioke0428@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   A private blog for recording thoughts, tech, etc.
 # baseurl: "" # the subpath of your site, e.g. /blog
-url: "mioke.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://mioke.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: 
 github_username:  Mioke
-github: {
-  owner_url: "https://github.com/Mioke"
-}
+
 # Build settings
 markdown: kramdown
 # theme: jekyll-theme-minimal
