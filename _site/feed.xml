@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-01T09:59:19+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-01T10:08:31+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
 </subtitle><entry><title type="html">Pop、泛型和函数式思想在ios中的应用</title><link href="http://localhost:4000/2017/04/01/POP-%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html" rel="alternate" type="text/html" title="Pop、泛型和函数式思想在ios中的应用" /><published>2017-04-01T00:00:00+08:00</published><updated>2017-04-01T00:00:00+08:00</updated><id>http://localhost:4000/2017/04/01/POP%E3%80%81%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8</id><content type="html" xml:base="http://localhost:4000/2017/04/01/POP-%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">&lt;h1 id=&quot;pop泛型和函数式思想在ios中的应用&quot;&gt;POP、泛型和函数式思想在iOS中的应用&lt;/h1&gt;
 
 &lt;h2 id=&quot;主要内容&quot;&gt;主要内容&lt;/h2&gt;
@@ -517,6 +517,7 @@ struct Swallow: Flyable {
 &lt;h3 id=&quot;参考&quot;&gt;参考&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;[B]Functional Swift - Chris Eidhof, Florian Kugler, Wouter Swierstra&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://realm.io/cn/news/appbuilders-natasha-muraschev-practical-protocol-oriented-programming/&quot;&gt;Practical Protocol Oriented Programming&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;扩展阅读&quot;&gt;扩展阅读&lt;/h3&gt;
