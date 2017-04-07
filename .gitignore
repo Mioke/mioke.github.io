@@ -1,2 +1,6 @@
 .sass-cache
 *.lock
+
+_site
+.DS_Store
+.jekyll-metadata
