@@ -1,15 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-01T10:08:31+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
-</subtitle><entry><title type="html">Pop、泛型和函数式思想在ios中的应用</title><link href="http://localhost:4000/2017/04/01/POP-%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html" rel="alternate" type="text/html" title="Pop、泛型和函数式思想在ios中的应用" /><published>2017-04-01T00:00:00+08:00</published><updated>2017-04-01T00:00:00+08:00</updated><id>http://localhost:4000/2017/04/01/POP%E3%80%81%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8</id><content type="html" xml:base="http://localhost:4000/2017/04/01/POP-%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">&lt;h1 id=&quot;pop泛型和函数式思想在ios中的应用&quot;&gt;POP、泛型和函数式思想在iOS中的应用&lt;/h1&gt;
-
-&lt;h2 id=&quot;主要内容&quot;&gt;主要内容&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;什么是POP？&lt;/li&gt;
-  &lt;li&gt;POP在实际项目中的应用实践&lt;/li&gt;
-  &lt;li&gt;函数式编程和Swift中泛型编程&lt;/li&gt;
-  &lt;li&gt;Swift中POP与泛型、函数式编程的结合。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;什么是pop--protocol-oriented-programing&quot;&gt;什么是POP  (Protocol-oriented-programing)&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-07T10:13:48+08:00</updated><id>http://localhost:4000/</id><title type="html">Klein No Heya</title><subtitle>A private blog for recording thoughts, tech, etc.
+</subtitle><entry><title type="html">Pop、泛型和函数式思想在ios中的应用</title><link href="http://localhost:4000/2017/04/01/POP-%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html" rel="alternate" type="text/html" title="Pop、泛型和函数式思想在ios中的应用" /><published>2017-04-01T00:00:00+08:00</published><updated>2017-04-01T00:00:00+08:00</updated><id>http://localhost:4000/2017/04/01/POP%E3%80%81%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8</id><content type="html" xml:base="http://localhost:4000/2017/04/01/POP-%E6%B3%9B%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E6%80%9D%E6%83%B3%E5%9C%A8iOS%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">&lt;h3 id=&quot;什么是pop--protocol-oriented-programing&quot;&gt;什么是POP  (Protocol-oriented-programing)&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;在我们平常工作中，经常使用的是OOP（Object-Oriented-Programing），比如C++、OC、JAVA。他们是把一些数据或动作集合当做一个对象来看待，比如树、人、机器等。POP则不同，它从另一个视角看待事物：属性。一个对象拥有的数据属性和动作属性，都可以成为一种协议（protocol），不同的对象间有着共同的协议或相似的协议。&lt;/li&gt;
@@ -523,7 +513,7 @@ struct Swallow: Flyable {
 &lt;h3 id=&quot;扩展阅读&quot;&gt;扩展阅读&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html&quot;&gt;Functors, Applicatives, And Monads In Pictures&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">POP、泛型和函数式思想在iOS中的应用</summary></entry><entry><title type="html">Transmissioin Between Weex And Ios Native</title><link href="http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native.html" rel="alternate" type="text/html" title="Transmissioin Between Weex And Ios Native" /><published>2017-03-24T00:00:00+08:00</published><updated>2017-03-24T00:00:00+08:00</updated><id>http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native</id><content type="html" xml:base="http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native.html">&lt;h2 id=&quot;weex-与-ios-native-的传输&quot;&gt;Weex 与 iOS Native 的传输&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">什么是POP (Protocol-oriented-programing)</summary></entry><entry><title type="html">Transmissioin Between Weex And Ios Native</title><link href="http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native.html" rel="alternate" type="text/html" title="Transmissioin Between Weex And Ios Native" /><published>2017-03-24T00:00:00+08:00</published><updated>2017-03-24T00:00:00+08:00</updated><id>http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native</id><content type="html" xml:base="http://localhost:4000/2017/03/24/Transmissioin-between-Weex-and-iOS-native.html">&lt;h2 id=&quot;weex-与-ios-native-的传输&quot;&gt;Weex 与 iOS Native 的传输&lt;/h2&gt;
 
 &lt;p&gt;在使用Weex时，我们经常需要数据和事件与native之间的交互，多发生于界面事件和数据传输。举个很简单的例子，Weex page中一项内购的页面，需要显示Apple store的价格，此时需要native从服务器拿到价格后发送给weex page做显示。这个过程包括weex发送请求到本地，本地处理回调等。&lt;/p&gt;
 

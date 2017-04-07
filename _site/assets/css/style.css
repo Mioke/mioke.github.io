@@ -235,6 +235,10 @@
 .highlight {
   background-color: #f8f8f8; }
 
+.mask {
+  position: absolute;
+  height: 100%; }
+
 body {
   background-color: #fff;
   padding: 50px;
