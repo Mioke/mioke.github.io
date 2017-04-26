@@ -22,7 +22,8 @@ url: "https://mioke.github.io" # the base hostname & protocol for your site, e.g
 
 # Build settings
 markdown: kramdown
-highlighter: pygments
+# highlighter: pygments
+highlighter: rouge
 
 # theme: jekyll-theme-minimal
 gems:
