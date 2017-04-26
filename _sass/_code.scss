@@ -9,13 +9,16 @@ code {
   font-family: $monospace-font-family;
   font-size: 90%;
 }
-
+figure {
+  margin-left: 0px;
+  margin-right: 0px;
+}
 code {
   color: #7a7a7a;
 }
 
 pre {
-  padding: 1.125em;
+  padding: 1em;
   line-height: 1.11;
   overflow-x: scroll;
   margin-bottom: 0.88em;
