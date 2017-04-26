@@ -22,6 +22,8 @@ url: "https://mioke.github.io" # the base hostname & protocol for your site, e.g
 
 # Build settings
 markdown: kramdown
+highlighter: pygments
+
 # theme: jekyll-theme-minimal
 gems:
   - jekyll-feed
@@ -74,7 +76,7 @@ stackoverflow_id:
 twitter_username:
 skype_username:
 steam_nickname:
-google_plus_id:
+google_plus_id:   
 linkedin_username:
 angellist_username:
 medium_id:

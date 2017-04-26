@@ -5,7 +5,6 @@ date:   2017-04-24 19:18:00 +0800
 categories: Tech
 summary: The first part of learning ReacitveSwift, knowledge of basic usages.
 ---
-# Learning ReactiveSwift - Part 1
 
 > RAC 4.0发布以后发现，RAC进行了大量的更新，其中最主要的是使用了ReactiveSwift作为基础库，替换掉了以前OC版的库，RAC则是对于RAS和Cocoa框架的封装。
 
@@ -39,9 +38,10 @@ Functional Programming强调使用数学模型的函数来计算，特点是不�
 ## 简单使用ReactiveSwift
 
 > 了解基础用法，其实可以下载ReactiveCocoa源码工程，在单元测试中可以找到API的各种用法。下面源码大部分取自单元测试代码。
+
 ### Signal
 
-```swift
+{% highlight swift %}
 // 使用一段代码（运行）
 let disposable = SimpleDisposable()
 let signal: Signal<Int, NoError> = Signal { observer in
@@ -68,7 +68,7 @@ signal.observe { event in
 // observer可以send events
 observer.send(value: "a string")
 observer.sendCompleted()
-```
+{% endhighlight %}
 
 ### SignalProducer
 SignalProducer是触发式的
