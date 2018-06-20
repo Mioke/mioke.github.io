@@ -6,7 +6,7 @@ categories: Tech
 summary:    Codable 在 Swift 4.0 中的用法和事项。
 ---
 
-### Swfit Codable 
+### Swift Codable 
 
 `Codable` 其实是组合协议：
 
