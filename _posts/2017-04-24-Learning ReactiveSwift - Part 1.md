@@ -35,6 +35,12 @@ Functional Programming强调使用数学模型的函数来计算，特点是不�
 
 简单来说，监听或订阅一个信号，可能会产生副作用，为了区分是否产生副作用，ReactiveSwift区分了两个类型。
 
+## Signal vs. SignalProducer
+
+To understand the difference between Signal and SignalProducer, let’s take the analogy of TV and on-demand streaming service. Signal behaves like a TV feed which is a continuous stream of video and audio. At a given point of time, every observer of the TV feed sees the same sequence of the frame. The observer neither can inject any side effect to TV feed, nor it can start or stop the feed. The observer can only start and stop receiving the feed. On the other hand, SignalProducer is like an on demand streaming service like YouTube. Here, the observer can receive a stream of video and audio, but the sequence of the stream is different for a different observer. Here the observer can start and stop the feed.
+
+Therefore, Signals are generally used to represent event streams that are already “in progress,” such as notifications, user input, etc. SignalProducers, on the other hand, are used to represent operations or tasks which need to be started. For example, like network requests, where each invocation of start will create a new underlying operation. In the case of a Signal, the results might be sent before any observers are attached. In the case of a SignalProducer, the results are not sent unless it is started.
+
 ## 简单使用ReactiveSwift
 
 > 了解基础用法，其实可以下载ReactiveCocoa源码工程，在单元测试中可以找到API的各种用法。下面源码大部分取自单元测试代码。
