@@ -1,32 +1,55 @@
+---
+layout: compress
+# Default layout
+---
+
 <!DOCTYPE html>
-<html>
-{% include head.html %}
-<body class="site{% if site.animated %} animated fade-in-down{% endif %}">
-  {% if site.google_tag_manager %}
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.google_tag_manager }}"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+{% include lang.html %}
+
+{% capture prefer_mode %}
+  {% if site.theme_mode %}
+    mode="{{ site.theme_mode }}"
   {% endif %}
-	{% if site.facebook_comments %}
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId={{ site.facebook_appid }}";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-	{% endif %}
+{% endcapture %}
 
-  <div class="site-wrap">
-    {% include header.html %}
+<html lang="{{ site.lang }}" {{ prefer_mode }}>
 
-    <div class="post p2 p-responsive wrap" role="main">
-      <div class="measure">
-        {{ content }}
+  {% include head.html %}
+
+  <body data-spy="scroll" data-target="#toc">
+
+    {% include sidebar.html %}
+
+    {% include topbar.html %}
+
+    <div id="main-wrapper">
+      <div id="main">
+
+        {% include refactor-content.html content=content %}
+
+        {% include footer.html %}
+
       </div>
-    </div>
-  </div>
 
-  {% include footer.html %}
-</body>
+      {% include search-results.html %}
+
+    </div> <!-- #main-wrapper -->
+
+    {% if page.mermaid %}
+      {% include mermaid.html %}
+    {% endif %}
+
+    <div id="mask"></div>
+
+    <a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    {% include search-loader.html %}
+
+    {% include js-selector.html %}
+
+  </body>
+
 </html>

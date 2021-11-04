@@ -1,0 +1,124 @@
+I"�&<h3 id="swift-codable">Swift Codable</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Codable</code> 其实是组合协议：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">typealiase</span> <span class="kt">Codable</span> <span class="o">=</span> <span class="kt">Encodable</span> <span class="o">&amp;</span> <span class="kt">Decodable</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Swift 基础库中的 <code class="language-plaintext highlighter-rouge">Codable</code>、<code class="language-plaintext highlighter-rouge">JSONEncoder</code>、<code class="language-plaintext highlighter-rouge">PropertiesListEncoder</code> 给我们提供了日常所用的基础功能。使用起来也很简单，以 JSONEncoder 为例。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">Cat</span><span class="p">:</span> <span class="kt">Codable</span> <span class="p">{</span>
+     <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
+     <span class="k">var</span> <span class="nv">age</span><span class="p">:</span> <span class="kt">Int</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">sahra</span> <span class="o">=</span> <span class="kt">Cat</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"Sahra"</span><span class="p">,</span> <span class="nv">age</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">JSONEncoder</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">aCat</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">stringValue</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span> <span class="nv">encoding</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">stringValue</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Output:</span>
+<span class="s">"{"</span><span class="n">name</span><span class="s">":"</span><span class="kt">Sahra</span><span class="s">","</span><span class="n">age</span><span class="s">":1}"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="专用容器">专用容器</h3>
+
+<p>Codable 的默认实现是把当前类型中的变量都默认转换，如果你定义的类型中，要含有一些其他属性，而不希望这些属性自动转换，我们可以定义一个容器来使用。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">CatContainer</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">cat</span><span class="p">:</span> <span class="kt">Cat</span>
+    <span class="nf">init</span><span class="p">(</span><span class="n">with</span> <span class="nv">cat</span><span class="p">:</span> <span class="kt">Cat</span><span class="p">)</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="n">cat</span> <span class="o">=</span> <span class="n">cat</span> <span class="p">}</span>
+    
+    <span class="c1">// Other properties</span>
+    <span class="k">var</span> <span class="nv">storedID</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>依实际使用的情况而定，也可以使用泛型的容器。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">Container</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Codable</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">T</span>
+    <span class="nf">init</span><span class="p">(</span><span class="n">with</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">element</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="重定义-codingkeys">重定义 CodingKeys</h3>
+
+<p>我们可以用另外一种方法忽略部分属性或者改变编码或解码对应的 key 值。在结构体或类中定义枚举类型 <code class="language-plaintext highlighter-rouge">CodingKeys</code>，将需要编码的属性包含其中。如果需要改变编码后的命名，则用枚举 <code class="language-plaintext highlighter-rouge">String</code> raw value 来表示相应属性。普通情况下，用 <code class="language-plaintext highlighter-rouge">Int</code> 类型会节省开销。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">Cat</span><span class="p">:</span> <span class="kt">Codable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">var</span> <span class="nv">age</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 如果没有初始值，编译器会报错。</span>
+     
+    <span class="kd">enum</span> <span class="kt">CodingKeys</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">CodingKey</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"pet_name"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Output:</span>
+<span class="s">"{"</span><span class="n">pet_name</span><span class="s">":"</span><span class="kt">Sahra</span><span class="s">"}"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">CodingKeys</code> 中的元素名必须与属性名一一对应。除此之外，还可以更进一步自定义编解码动作，比如 nested 型结构的编解码，可以在这篇<a href="https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types">官方文档</a>中找到更多信息。</p>
+
+<h3 id="tips">Tips</h3>
+
+<ul>
+  <li>Optional 类型</li>
+</ul>
+
+<p>系统默认对于 Optional 的实现是，如果为 nil 的情况下，不会将该属性编码。如果你的业务方需要在属性为空时，JSON 对象中表示 <code class="language-plaintext highlighter-rouge">null</code>的话，需要定义 CodingKeys 并指定含有这个属性即可。</p>
+
+<ul>
+  <li>关于 <code class="language-plaintext highlighter-rouge">[Hashable: Any]</code> 类型的编解码</li>
+</ul>
+
+<p>对于代码迁移的工程来说，有很多部分代码还使用例如 <code class="language-plaintext highlighter-rouge">[String: Any]</code> 的字典类型来传递数据。<code class="language-plaintext highlighter-rouge">Any</code> 并不符合 Codable 协议，所以是时候使用 <code class="language-plaintext highlighter-rouge">[Hashable: Codable]</code> 重构这部分代码了:)</p>
+
+<h3 id="问题">问题</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />没有找到 Codable 的协议默认实现，却可以不用实现协议方法。</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">CodingKeys</code> 的实现原理，结合编译信息，猜测是编译时期工作。通过代码及注释信息，其实是分辨不出来 <code class="language-plaintext highlighter-rouge">CodingKeys</code> 的用法的，需要参考官方文档。个人觉得这是缺点之一，一是觉得实现原理不透明，不太容易理解；二是没有显式说明 Codable 和 CodingKeys 的关系。比如类型中需要编解码的属性其实编译时期都会校验是否都是 Codable 的，这点在编码的时候是体现不出来的。</li>
+</ul>
+
+<hr />
+
+:ET

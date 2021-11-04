@@ -1,0 +1,242 @@
+I"7<h3 id="protocol-组合">protocol 组合</h3>
+
+<p>其实 Any 是 protocol&lt;&gt; 的同名写法，可以用来表示任意类型。protocol&lt;&gt; 的标准语法形式是：<code class="language-plaintext highlighter-rouge">protocol&lt;ProtocolA, ProtocalB&gt;</code>。protocol 组合是可以使用 typealias 来命名的，这样可以提高我们的代码可读性：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">typealise</span> <span class="kt">ServerType</span> <span class="o">=</span> <span class="kd">protocol</span><span class="o">&lt;</span><span class="kt">URLDestination</span><span class="p">,</span> <span class="kt">DataResolver</span><span class="o">&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="可选接口-optional-protocol">可选接口 (optional protocol)</h3>
+
+<p>一种方法是标记 protocol 为<code class="language-plaintext highlighter-rouge">@objc</code>, 则可以使用 Objective-C 中的关键字<code class="language-plaintext highlighter-rouge">optional</code>:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="kd">@objc</span> <span class="kd">protocol</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span>
+	<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">optionalMethod</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>但是缺点是，<code class="language-plaintext highlighter-rouge">@objc</code>修饰的 protocol 只能提供给类使用，struct 和 enum 不能继承。我们可以用另一种办法 extension protocol，给 protocol 的方法提供默认实现。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">optionalMethod</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">optionalMethod</span><span class="p">()</span> <span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">Class</span> <span class="kt">A</span><span class="p">:</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="kt">A</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">optionalMethod</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>接口扩展之后，类实现接口的默认方法实现，即是扩展里的实现方法。这个写法也有个<strong>坏处</strong>，其他的使用者可能会不了解接口已经做过扩展，所以协议和扩展尽量写在同一个文件中，并注释清楚。</p>
+
+<h3 id="protocol-扩展和方法覆盖">protocol 扩展和方法覆盖</h3>
+
+<p>protocol 扩展可以为 protocol 类型提供额外的方法实现，就如 optional 实现原理一样。我们也可以在具体类的实现中覆盖这些方法：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">Progress</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">start</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">Progress</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">start</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="s">"nothing"</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Request</span><span class="p">:</span> <span class="kt">Progress</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">start</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="s">"request"</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">req</span> <span class="o">=</span> <span class="kt">Request</span><span class="p">()</span>
+<span class="n">req</span><span class="o">.</span><span class="nf">start</span><span class="p">()</span>   
+<span class="c1">// Print:</span>
+<span class="c1">// request</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>那现在再给 Progress 扩展一个定义中不含有的方法：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="kd">extension</span> <span class="kt">Progress</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">cancel</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="s">"nothing"</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Request</span><span class="p">:</span> <span class="kt">Progress</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">start</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="s">"request"</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="kd">func</span> <span class="nf">cancel</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="s">"cancel"</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">req</span> <span class="o">=</span> <span class="kt">Request</span><span class="p">()</span>
+<span class="n">req</span><span class="o">.</span><span class="nf">cancel</span><span class="p">()</span>                  <span class="o">==&gt;</span>  <span class="nf">cancel</span>
+<span class="p">(</span><span class="n">req</span> <span class="k">as</span> <span class="kt">Progress</span><span class="p">)</span><span class="o">.</span><span class="nf">cancel</span><span class="p">()</span>  <span class="o">==&gt;</span>  <span class="n">nothing</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>可以看到，对于类和接口里都实现了方法，且方法不在接口定义中时，实际调用时根据当前类型判断的，如果是 Request 则调用类中的方法，如果是 Protocol 则调用协议扩展中的方法。</p>
+
+<h3 id="protocol-assosiated-type">Protocol Assosiated Type</h3>
+
+<p>我们可以在 protocol 中添加一个 <code class="language-plaintext highlighter-rouge">associatedtype</code> 类型关联，实现协议的类型需要完成协议中的类型指定。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">StorableInfo</span> <span class="p">{</span>
+	<span class="kd">associatedtype</span> <span class="kt">InfoKey</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Request</span><span class="p">:</span> <span class="kt">StorableInfo</span> <span class="p">{</span>
+	<span class="kd">typealias</span> <span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">String</span>
+
+	<span class="k">var</span> <span class="nv">storedInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>在 Swift 4.0 中引入了 <code class="language-plaintext highlighter-rouge">where</code> 条件语句, 这样就可以更加灵活的运用一些泛型类型。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">StorableInfo</span> <span class="p">{</span>
+	<span class="kd">associatedtype</span> <span class="kt">InfoKey</span> <span class="k">where</span> <span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">Hashable</span>
+<span class="p">}</span>
+
+<span class="c1">// 在以前是编译不通过的，因为 M.InfoKey 不一定符合 Hashable</span>
+<span class="kd">class</span> <span class="kt">Request</span><span class="o">&lt;</span><span class="kt">M</span><span class="p">:</span> <span class="kt">StorableInfo</span><span class="o">&gt;</span> <span class="p">{</span>
+	<span class="k">var</span> <span class="nv">stroedInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">M</span><span class="o">.</span><span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="selfself-和-type">Self、.self 和 .Type</h3>
+
+<ul>
+  <li>.self 实际上是返回当前对象，如果是类型就返回当前类的元类型：</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="nv">user</span> <span class="o">=</span> <span class="kt">User</span><span class="p">()</span>
+<span class="n">user</span><span class="o">.</span><span class="k">self</span> <span class="o">==</span> <span class="n">user</span>  <span class="c1">// ==&gt; true</span>
+
+<span class="k">let</span> <span class="nv">userType</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="k">self</span>  <span class="c1">// User.Type</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>Self 一般使用在接口中，用来表明实现接口本身的对象：</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">Producer</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">User</span><span class="p">:</span> <span class="kt">Producer</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>这里有个问题，使用 self.init() 返回才能符合 Self，而不能使用 User() ，虽然这里 User 和 Self 等价。原因是在 non-final class 中实现方法，这个类是有可能被继承的，而如果使用 User() 这种写法，显然子类调用之后就不会返回子类的对象了。</p>
+</blockquote>
+
+<ul>
+  <li>.Type 是表明一个类的元类型，现在可以使用<code class="language-plaintext highlighter-rouge">type(of:)</code>方法来获得指定实例的元类型：</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">User</span><span class="o">.</span><span class="k">Type</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="k">self</span>
+<span class="k">let</span> <span class="nv">metaType</span> <span class="o">=</span> <span class="nf">type</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">user</span><span class="p">)</span>    <span class="o">===&gt;</span> <span class="kt">User</span><span class="o">.</span><span class="k">Type</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

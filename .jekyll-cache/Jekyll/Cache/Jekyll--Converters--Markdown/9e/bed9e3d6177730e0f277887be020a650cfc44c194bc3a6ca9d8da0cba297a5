@@ -1,0 +1,195 @@
+I"X/<h3 id="方法参数命名规范">方法参数命名规范</h3>
+
+<p>由于Objective-C API的命名转换，到Swift API的更新，现在（Swift 4.0）我们更应该使用靠近Swift系统的命名方式：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">convert</span><span class="p">(</span><span class="n">_</span> <span class="nv">point</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="n">from</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">CGPoint</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>不符合规范的：<code class="language-plaintext highlighter-rouge">func convertPoint(_ point: CGPoint, fromView view: UIView?) -&gt; CGPoint</code></p>
+</blockquote>
+
+<h3 id="类的初始化">类的初始化</h3>
+
+<p>类的初始化方法分为三种，DESIGNATED，CONVENIENCE 和 REQUIRED。对于初始化方法，必须遵循：</p>
+
+<ol>
+  <li>初始化路径必须保证对象完全初始化，这可以通过调用本类型的 designated 初始化方法来得到保证；</li>
+  <li>子类的 designated 初始化方法必须调用父类的 designated 方法，以保证父类也完成初始化。</li>
+</ol>
+
+<p>convenience 方法是 Swift 初始化方法中的 “二等公民”，只作为补充和提供使用上的方便。所有的 convenience 初始化方法都必须调用同一个类中的 designated 初始化完成设置，另外 convenience 的初始化方法是不能被子类重写或者是从子类中以 super 的方式被调用的。</p>
+
+<p>对于某些我们希望子类中一定实现的 designated 初始化方法，我们可以通过添加 required 关键字进行限制，强制子类对这个方法重写实现。这样做的最大的好处是可以保证依赖于某个 designated 初始化方法的 convenience 一直可以被使用。</p>
+
+<h3 id="属性访问控制">属性访问控制</h3>
+
+<p>现在的 Swift 版本（4.1），<code class="language-plaintext highlighter-rouge">private</code>关键字的访问权限已经改为：当前模组下的私有属性。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> --><td class="rouge-code"><pre><span class="c1">// Module: libSome</span>
+<span class="kd">class</span> <span class="kt">User</span> <span class="p">{</span>
+	<span class="kd">private</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">User</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="c1">// accessible</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Other app or lib:</span>
+<span class="kd">@import</span> <span class="n">libSome</span>
+
+<span class="kd">extension</span> <span class="kt">User</span> <span class="p">{</span>
+	<span class="kd">func</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nf">print</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="c1">// value of type 'User' has no member 'id'</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>其他关键字还有<code class="language-plaintext highlighter-rouge">public</code>、<code class="language-plaintext highlighter-rouge">internal</code>、<code class="language-plaintext highlighter-rouge">fileprivate</code>，含义为<code class="language-plaintext highlighter-rouge">公开</code>、<code class="language-plaintext highlighter-rouge">内部</code>、<code class="language-plaintext highlighter-rouge">文件私有</code>，默认使用的是<code class="language-plaintext highlighter-rouge">internal</code>，严格的使用访问控制，可以优化代码和模组的使用，也会减少许多不必要的麻烦。</p>
+
+<p>另外对于 Swift 中的只读属性也是通过访问控制完成的：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> --><td class="rouge-code"><pre><span class="kd">class</span> <span class="kt">User</span> <span class="p">{</span>
+	<span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span>  	     
+	<span class="nf">fileprivate</span><span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">local</span><span class="p">:</span> <span class="kt">String</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="嵌套-enum">嵌套 enum</h3>
+
+<p>在 enum 里编译器是不允许直接嵌套使用的，我们可以添加 <code class="language-plaintext highlighter-rouge">indirect</code> 使编译器通过编译。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> --><td class="rouge-code"><pre><span class="kd">indirect</span> <span class="kd">enum</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">{</span>
+	<span class="k">case</span> <span class="n">empty</span>
+	<span class="k">case</span> <span class="nf">value</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">Value</span><span class="p">,</span> <span class="nv">left</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">right</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">leaf</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">left</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="nv">right</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="lock">Lock</h3>
+
+<p>Objective-C 中的<code class="language-plaintext highlighter-rouge">@synchronized</code>其实是使用了互斥锁<code class="language-plaintext highlighter-rouge">objc_sync</code>中的<code class="language-plaintext highlighter-rouge">objc_sync_enter</code>和<code class="language-plaintext highlighter-rouge">obcj_sync_exit</code>方法。在 Swift 中我们可以仿写一下：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> --><td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">synchronized</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nf">objc_sync_enter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="nf">closure</span><span class="p">()</span>
+    <span class="nf">objc_sync_exit</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+	<span class="o">...</span>
+	<span class="nf">synchronized</span><span class="p">(</span><span class="n">anObj</span><span class="p">)</span> <span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>这样就可以简单的给一个对象加锁了。</p>
+
+<p>自旋锁 OSSpinLock 作为一个高性能的自旋锁，以前被基础框架广泛使用，但是后来苹果工程师证实一些线程优先级调度算法，会造成优先级翻转问题，造成自旋锁被破坏。作为高性能锁的替换，一些大公司的框架会使用 dispatch_semaphore 、 pthread_mutex 、 NSLock。</p>
+
+<ul>
+  <li>
+    <p>dispatch_semaphore</p>
+
+    <p>GCD 中的信号量，用法简单，在调用<code class="language-plaintext highlighter-rouge">wait()</code>时如果信号量为负则会阻断当前线程，实现不同线程的互斥。</p>
+  </li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td> --><td class="rouge-code"><pre>
+<span class="k">let</span> <span class="nv">semaphore</span> <span class="o">=</span> <span class="kt">DispatchSemaphore</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nf">dispatch_global_async</span><span class="p">(</span><span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nf">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+		<span class="n">semaphore</span><span class="o">.</span><span class="nf">signal</span><span class="p">()</span>
+	<span class="p">}</span>
+	<span class="n">semaphore</span><span class="o">.</span><span class="nf">wait</span><span class="p">()</span>
+	<span class="o">...</span>
+<span class="p">}</span>
+
+<span class="c1">// or</span>
+<span class="kd">func</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">semaphore</span><span class="o">.</span><span class="nf">wait</span><span class="p">();</span> <span class="k">defer</span> <span class="p">{</span> <span class="n">semaphore</span><span class="o">.</span><span class="nf">signal</span><span class="p">()</span> <span class="p">}</span>
+	<span class="o">...</span> <span class="c1">// 方法内是单线程加锁访问的</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>
+    <p>pthread_mutex 互斥锁</p>
+
+    <p>pthread_mutex 是 Linux 和 Mac 系统常用的互斥锁，使用方法与普通互斥锁一样，而已实现线程同步。具体的使用教程可参考 Google。</p>
+  </li>
+  <li>
+    <p>NSLock</p>
+
+    <p>NSLock 其实是对 pthread_mutex 的一层封装。</p>
+  </li>
+</ul>
+
+:ET

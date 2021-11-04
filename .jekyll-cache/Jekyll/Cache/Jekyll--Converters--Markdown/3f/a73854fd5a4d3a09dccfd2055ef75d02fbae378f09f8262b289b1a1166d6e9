@@ -1,0 +1,204 @@
+I"+B<h2 id="weex-与-ios-native-的传输">Weex 与 iOS Native 的传输</h2>
+
+<p>在使用Weex时，我们经常需要数据和事件与native之间的交互，多发生于界面事件和数据传输。举个很简单的例子，Weex page中一项内购的页面，需要显示Apple store的价格，此时需要native从服务器拿到价格后发送给weex page做显示。这个过程包括weex发送请求到本地，本地处理回调等。</p>
+
+<p>本文主要内容就是，如何实现这一过程及保证统一、低耦合的中间层。</p>
+
+<h3 id="实现原理">实现原理</h3>
+
+<h4 id="weex-端发送请求">Weex 端发送请求</h4>
+<p>在Weex界面的JS script中，我们能通过调用App注册的模组来直接调用方法。在demo中，处理这一过程的是<code class="language-plaintext highlighter-rouge">XLPluginEvent</code>类。在初始化SDK时，通过注册：</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre><span class="p">[</span><span class="n">WXSDKEngine</span> <span class="nf">registerModule</span><span class="p">:</span><span class="s">@"mediator"</span> <span class="nf">withClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@"XLPluginEvent"</span><span class="p">)];</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>JS端就可以通过注册的类其中的方法，来发起一个Event：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> --><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">module</span> <span class="o">=</span> <span class="nx">weex</span><span class="p">.</span><span class="nx">requireModule</span><span class="p">(</span><span class="dl">'</span><span class="s1">mediator</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">sendRequestData</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="dl">'</span><span class="s1">pluginA</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">native</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">ret</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="nx">ret</span>
+	<span class="nx">modal</span><span class="p">.</span><span class="nx">toast</span><span class="p">({</span>
+		<span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">receive</span><span class="dl">'</span><span class="p">,</span>
+		<span class="na">duration</span><span class="p">:</span> <span class="mf">0.3</span>
+	<span class="p">})</span>
+<span class="p">})</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>JS端的function可以以参数传递给native并以block形式调用。这样就实现了JS端发起Event并可以获得回调。</p>
+
+<h4 id="native发起events">Native发起Events</h4>
+
+<p>Native端可有两种方式传递events至Weex。</p>
+
+<ul>
+  <li>通过WXSDKManager提供的fireEvent:ref:type:params:domChanges:方法。用这个方法可以在weex page上监听到事件，如
+    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> --><td class="rouge-code"><pre><span class="p">[[</span><span class="n">WXSDKManager</span> <span class="nf">bridgeMgr</span><span class="p">]</span> <span class="nf">fireEvent</span><span class="p">:</span><span class="n">targetWX</span><span class="p">.</span><span class="n">InstanceId</span>
+                             <span class="nl">ref:</span><span class="s">@"_root"</span> 
+                            <span class="nl">type:</span><span class="s">@"nativetransport"</span>
+                          <span class="nl">params:</span><span class="n">paramsAddCallback</span>
+                      <span class="nl">domChanges:</span><span class="nb">nil</span><span class="p">];</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;template&gt;</span>
+    <span class="nt">&lt;text</span> <span class="na">onClick=</span><span class="s">'onClick'</span> <span class="na">onnativetransport=</span><span class="s">""</span> <span class="na">id=</span><span class="s">'text1'</span><span class="nt">&gt;</span>callback: <span class="nt">&lt;/text&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+
+  <span class="nt">&lt;script&gt;</span>
+    <span class="err">#</span> <span class="nx">上略</span>
+    <span class="nx">nativeTransport</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="nt">&lt;/script&gt;</span></code></pre></figure>
+
+<ul>
+  <li>通过fireGlobalEvent:params:方法
+这个方法其实是发送一个全局通知，所有已存在的Weex page都能接收到这个Event，但前提是Weex page初始化时注册listener。
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> --><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">globalEvent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@weex-module/globalEvent</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">globalEvent</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">nativetransport</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+ <span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">native send a request</span><span class="dl">"</span>
+<span class="p">})</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+    <p>这时native调用<code class="language-plaintext highlighter-rouge">fireEvent</code>就可以触发这个监听事件。</p>
+  </li>
+</ul>
+
+<h3 id="中间层">中间层</h3>
+<p>建立中间层的目的是统一对所有Weex page的events做转发，一来是方便做hook，二来是防止plugin与plugin之间互相直接调用产生耦合。如果没有统一的中间层和派发关系，想象一下维护过N个版本之后的杂乱无章的调用关系…</p>
+
+<p>梳理下我们期待的流程图：</p>
+
+<p><img src="https://raw.githubusercontent.com/Mioke/resources/master/images/weex_native_transport.png" alt="image" /></p>
+
+<h4 id="绑定事件">绑定事件</h4>
+<p>每个Weex instance都可以绑定module来处理事件，所以module的实例也是分散形式的。我们用统一的类<code class="language-plaintext highlighter-rouge">XLPluginEvent</code>来收集信息，并将信息转到统一的中间层类<code class="language-plaintext highlighter-rouge">XLWxPluginMediator</code>做处理。</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td> --><td class="rouge-code"><pre><span class="p">[</span><span class="n">WXSDKEngine</span> <span class="nf">registerModule</span><span class="p">:</span><span class="s">@"mediator"</span> <span class="nf">withClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@"XLPluginEvent"</span><span class="p">)];</span>
+
+<span class="c1">// In XLPluginEvent class:</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendRequestData</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
+                   <span class="nf">from</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">source</span>
+               <span class="nf">toTarget</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">target</span>
+               <span class="nf">callback</span><span class="p">:(</span><span class="n">WXModuleCallback</span><span class="p">)</span><span class="nv">callback</span> <span class="p">{</span>
+    <span class="p">[[</span><span class="n">XLWxPluginMediator</span> <span class="nf">sharedInstance</span><span class="p">]</span> <span class="nf">sendRequestData</span><span class="p">:</span><span class="n">data</span>
+                                                    <span class="nl">from:</span><span class="n">weexInstance</span>
+                                                  <span class="nl">source:</span><span class="n">source</span>
+                                                <span class="nl">toTarget:</span><span class="n">target</span>
+                                                <span class="nl">callback:</span><span class="n">callback</span><span class="p">];</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="中间处理">中间处理</h4>
+<p><code class="language-plaintext highlighter-rouge">XLWxPluginMediator</code>同时具有接收和发送功能。接收event之后会根据event附带的information，做本地分发或插件分发，一般用<code class="language-plaintext highlighter-rouge">target</code>标明event的目标对象。</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td> --><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendRequestData</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
+                   <span class="nf">from</span><span class="p">:(</span><span class="n">WXSDKInstance</span> <span class="o">*</span><span class="p">)</span><span class="nv">wx</span>
+                 <span class="nf">source</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">source</span>
+               <span class="nf">toTarget</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">target</span>
+               <span class="nf">callback</span><span class="p">:(</span><span class="n">WXModuleCallback</span><span class="p">)</span><span class="nv">callback</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">target</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"native"</span><span class="p">])</span> <span class="p">{</span>
+        <span class="c1">// Notify all native listeners</span>
+        
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 1 . find target</span>
+<span class="c1">//        WXSDKInstance *target = [Finder findtarget];</span>
+        <span class="c1">// 2 . fire a event &amp; wait to callback</span>
+<span class="c1">//        [self sendEventTo:target params:data callback:callback];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>native向plugin做通信请求<strong>暂时</strong>是通过fireGlobalEvent方法实现的，原因是使用fireEvent会与<strong>界面绑定</strong>，某些场合我们并不需要与界面绑定。</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> --><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendEventTo</span><span class="p">:(</span><span class="n">WXSDKInstance</span> <span class="o">*</span><span class="p">)</span><span class="nv">wx</span> 
+             <span class="nf">params</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">params</span>
+           <span class="nf">callback</span><span class="p">:(</span><span class="n">WXModuleCallback</span><span class="p">)</span><span class="nv">callback</span> <span class="p">{</span>
+           
+    <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">paramsAddCallback</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableDictionary</span> <span class="nf">dictionaryWithDictionary</span><span class="p">:</span><span class="n">params</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">paramsAddCallback</span> <span class="nf">setObject</span><span class="p">:</span><span class="n">callback</span> <span class="nf">forKey</span><span class="p">:</span><span class="s">@"callback"</span><span class="p">];</span>
+    
+    <span class="p">[</span><span class="n">wx</span> <span class="nf">fireGlobalEvent</span><span class="p">:</span><span class="s">@"nativetransport"</span> <span class="nf">params</span><span class="p">:</span><span class="n">paramsAddCallback</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>拥有响应native event的plugin必须在onCreate里实现这个event的监听：</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> --><td class="rouge-code"><pre><span class="nx">created</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">globalEvent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@weex-module/globalEvent</span><span class="dl">'</span><span class="p">)</span>
+            <span class="nx">globalEvent</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">nativetransport</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+            <span class="p">})</span>
+        <span class="p">},</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>由此就实现了plugin与native之间的双向传输。</p>
+
+<h4 id="plugins-之间的传输">Plugins 之间的传输</h4>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre><span class="c1">// TODO: - </span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
