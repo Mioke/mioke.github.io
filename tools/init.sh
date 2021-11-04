@@ -80,7 +80,7 @@ init_files() {
 
   # remove the other fies
   rm -f .travis.yml
-  rm -rf _posts/* docs
+  # rm -rf _posts/* docs
 
   # save changes
   git add -A
