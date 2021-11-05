@@ -2,7 +2,7 @@
 layout: post
 title:  "Transmission Between Weex and iOS Native"
 date:   2017-03-24 13:00:00 +0800
-categories: Tech
+categories: [Tech, Hybrid]
 summary:    在使用Weex时，我们经常需要数据和事件与native之间的交互，这篇文章描述怎么建立一个统一的交互路由。
 ---
 

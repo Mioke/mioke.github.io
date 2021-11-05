@@ -2,7 +2,7 @@
 layout: post
 title:  "Nginx Deployment on Mac OS"
 date:   2017-03-22 18:02:09 +0800
-categories: Tech
+categories: [Tech, Server]
 summary: Build and deploy your nginx step by step.
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "Learning ReactiveSwift - Part 2"
 date:   2017-07-04 20:00:00 +0800
-categories: Tech
+categories: [Tech, FRP]
 summary: The second part of learning ReacitveSwift.
 ---
 
