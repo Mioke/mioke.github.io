@@ -1,5 +1,5 @@
 ---
-title: The "some" in Swift
+title: The some in Swift
 author: Klein
 date: 2021-11-12 15:20:00 +0800
 categories: [Tech, Swift]
