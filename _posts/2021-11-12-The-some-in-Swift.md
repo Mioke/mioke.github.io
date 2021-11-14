@@ -49,7 +49,7 @@ so，现在我们需要分析为什么会又这个错误，以及从此分析编
 当我们添加 `some` 之后为什么不行了呢？通过刚才的结果，我们只能返回其中之一的确定类型，说明编译器在处理 `some` 时，会自动推断方法内返回的类型，并把它替换到返回类型上。
 
 有点点类似范型方法（可以这么理解，但是实际不一样）
-```Swift
+```swift
 func getSomeFlyableCreatures<T: Flyable>() -> T
 ```
 所以在添加 `some` 之后方法体里返回的必须是固定的一种类型。
@@ -98,7 +98,7 @@ func getSomeFlyableCreatures() -> Bird {}
 
 ## Final
 关于类型推断，我个人觉得目前 Swift 有个 bug。。
-```Swift
+```swift
 protocol Flyable {}
 class Bird: Flyable {}
 
@@ -123,7 +123,7 @@ class NatureBuilder: Builder {
 
 在范型类中同样也有这个问题。
 
-```Swift
+```swift
 class NatureBuilder<T: Flyable>: Builder {
     func build() -> some Flyable {
         return T()
