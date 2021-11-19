@@ -2,7 +2,7 @@
 title: Why we struggled using native code to build apps
 author: Klein
 date: 2021-11-19 20:02:00 +0800
-categories: [Tech, View Points]
+categories: [View Points, Tech]
 tags: [View Points]
 summary: 
 ---
