@@ -3,6 +3,7 @@ layout:     post
 title:      "Codable introduced in Swift 4.0"
 date:       2018-06-13 10:55 +0800
 categories: [Tech, Swift]
+tags:       [Swift, Codable]
 summary:    Codable 在 Swift 4.0 中的用法和事项。
 ---
 

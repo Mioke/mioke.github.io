@@ -3,7 +3,7 @@ title: Compare between RxSwift and ReactiveSwift
 author: Klein
 date: 2021-11-10 18:32:00 +0800
 categories: [Tech, FRP]
-tags: [FRP, Swift, ReactiveSwift]
+tags: [FRP, Swift, ReactiveSwift, RxSwift]
 summary: The different part between RxSwift and ReactiveSwift, and learn how to understand them.
 ---
 

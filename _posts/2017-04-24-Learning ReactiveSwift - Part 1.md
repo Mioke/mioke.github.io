@@ -3,6 +3,7 @@ layout: post
 title:  "Learning ReactiveSwift - Part 1"
 date:   2017-04-24 19:18:00 +0800
 categories: [Tech, FRP]
+tags:       [Swift, FRP, ReactiveSwift]
 summary: The first part of learning ReacitveSwift, knowledge of basic usages.
 ---
 
