@@ -96,6 +96,8 @@ func getSomeFlyableCreatures() -> Bird {}
 
 `some` 更多的还是类似于 SwiftUI 中的 `some View`，提供了 Opaque Type 的类型推断，方便代码书写和隐藏不关键的类信息，详细可参考这篇[提案](https://github.com/apple/swift-evolution/blob/main/proposals/0244-opaque-result-types.md)。
 
+[Update Notice] 又被小伙伴提醒了一篇介绍，好像这篇更明确的说明了当初设计的思路。[Forum posts](https://forums.swift.org/t/improving-the-ui-of-generics/22814#heading--missing-type-level-abstraction)
+
 ## Final
 关于类型推断，我个人觉得目前 Swift 有个 bug。。
 ```swift
