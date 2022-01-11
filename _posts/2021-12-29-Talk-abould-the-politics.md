@@ -1,7 +1,7 @@
 ---
 title: When we talk about politics
 author: Klein
-date: 2021-11-19 20:02:00 +0800
+date: 2021-12-29 20:51:00 +0800
 categories: [View Points]
 tags: [View Points]
 summary: 
