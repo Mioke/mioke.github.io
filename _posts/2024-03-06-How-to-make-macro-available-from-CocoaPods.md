@@ -192,7 +192,7 @@ s.dependency 'SwiftyArchitectureMacrosPackage'
 And then it will be a little tricky, because we can't directly insert the `OTHER_SWIFT_FLAG` into other pod target settings because:
 
 1. In another's podspec, hard code the executable path is not a good idea, because the path may changes when you switching the macro pod between local and remote.
-2. If a lot of pods are depending on the macro pod, when macro pod setting changes you must update all the pods' podspec file which is a hard work.
+2. If a lot of pods are depending on the macro pod, when macro pod setting changes you must update all the pods' podspec file which is a big trouble.
 
 So we need to do some tricks. We can use `pod install`'s `post_install` hook to do this. Add these code to your `Podfile`, it aims to add the `OTHER_SWIFT_FLAG` setting to the `Pods.proj`, and all the pod targets will inherit from it.
 
