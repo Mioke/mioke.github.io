@@ -7,9 +7,9 @@ tags: [Tech, Swift, Rust]
 summary: Provide macros to other project's or development pods using CocoaPods instead of using SwiftPM.
 ---
 
-By the release of Swift 5.9, it provide the feature `Swift Macro`, which is really useful for the developer to reduce poilate code and helping to improve the readability of the code.
+By the release of Swift 5.9, it provide the feature `Swift Macro`, which is really useful for the developer to reduce boilerplate code and helping to improve the readability of the code.
 
-However, as we know, currently most long running projects are using CocoaPods as their dependency manager, while the Swift Macro support officailly relies on SwiftPM. This prevents macros from being directly used in the project code and development pods.
+However, as we know, currently most long running projects are using CocoaPods as their dependency manager, while the Swift Macro support officially relies on SwiftPM. This prevents macros from being directly used in the project code and development pods.
 
 So this article is about to introduce how to make Swift Macro available using CocoaPods, for host project and other pods.
 
@@ -25,7 +25,7 @@ For example:
 
 That means we can build a plugin executable and provide it through CocoaPods, update the settings in Pods project and host project before or after the `pod install` command.
 
-Okay, let do it.
+Okay, let's do it.
 
 (All the example code can be found in [this repo](https://github.com/Mioke/SwiftyArchitectureMacros))
 
@@ -83,7 +83,7 @@ By using this `swift biuld -c release` command, we can get a `SwiftyArchitecture
 
 ## Create a pod to host the macro plugin executable
 
-### Using a perpared macro executable
+### Using a prepared macro executable
 
 Next, we will create a podspec file to host the executable file and add some configurations.
 
@@ -106,7 +106,7 @@ s.pod_target_xcconfig = xcode_config
 
 Key points:
 
-1. The `source_files` should contain the macro definition files, which are the files that contains the macro defininations like:
+1. The `source_files` should contain the macro definition files, which are the files that contains the macro definitions like:
 
    ```swift
    @freestanding(expression)
@@ -152,7 +152,7 @@ Besides the key points introduced above, this section also needs attention to se
 1. The `preserve_paths` should contain the `Package.swift` and files that are used to build the executable.
 2. And don't forget to update the build config path to `#{product_folder}/release/SwiftyArchitectureMacros#SwiftyArchitectureMacros`.
 
-The goodcomming is that we don't need to prepare the executable file, it will be built by the script when the main project starts building, and it won't have any compatible issue. However you should know that the script will be executed every time when the project builds, and it may takes a long time when there's no build cache. So I suggest as a SDK provider, you should provide both options.
+The benefit is that we don't need to prepare the executable file, it will be built by the script when the main project starts building, and it won't have any compatible issue. However you should know that the script will be executed every time when the project builds, and it may takes a long time when there's no build cache. So I suggest as a SDK provider, you should provide both options.
 
 ## Integrate to other targets
 
@@ -166,7 +166,7 @@ pod 'SwiftyArchitectureMacrosPackage'
 pod 'SwiftyArchitectureMacros'
 ```
 
-Becasue of the `OTHER_SWIFT_FLAG` setting are already inserted by the `podspec` file into the host project settings, you don't need to do anything else.
+Because of the `OTHER_SWIFT_FLAG` setting are already inserted by the `podspec` file into the host project settings, you don't need to do anything else.
 
 ```swift
 import SwiftyArchitectureMacrosPackage
