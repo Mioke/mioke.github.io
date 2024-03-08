@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="day-prompt" content="days ago"><meta name="hour-prompt" content="hours ago"><meta name="minute-prompt" content="minutes ago"><meta name="justnow-prompt" content="just now"><meta name="generator" content="Jekyll v4.3.3" /><meta property="og:title" content="Swift Tips (3) - Protocol" /><meta property="og:locale" content="en" /><meta name="description" content="protocol 组合" /><meta property="og:description" content="protocol 组合" /><link rel="canonical" href="https://mioke.github.io/posts/Swift-Tips-(3)/" /><meta property="og:url" content="https://mioke.github.io/posts/Swift-Tips-(3)/" /><meta property="og:site_name" content="Klein Mioke" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2018-06-07T15:55:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Swift Tips (3) - Protocol" /><meta name="twitter:site" content="@Klein_Mioke" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-03-07T16:26:16+08:00","datePublished":"2018-06-07T15:55:00+08:00","description":"protocol 组合","headline":"Swift Tips (3) - Protocol","mainEntityOfPage":{"@type":"WebPage","@id":"https://mioke.github.io/posts/Swift-Tips-(3)/"},"url":"https://mioke.github.io/posts/Swift-Tips-(3)/"}</script><title>Swift Tips (3) - Protocol | Klein Mioke</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Klein Mioke"><meta name="application-name" content="Klein Mioke"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end" lang="en"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="https://github.com/Mioke/mioke.github.io/raw/master/assets/img/avatar/avatar.JPG" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Klein Mioke</a></div><div class="site-subtitle font-italic">Klein's Memory Castle</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/Mioke" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/Klein_Mioke" aria-label="twitter" class="order-4" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['mioke0428','gmail.com'].join('@')" aria-label="email" class="order-5" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Swift Tips (3) - Protocol</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Swift Tips (3) - Protocol</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> Klein </span> on <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Thu, Jun 7, 2018, 3:55 PM +0800" >Jun 7, 2018<i class="unloaded">2018-06-07T15:55:00+08:00</i> </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Thu, Mar 7, 2024, 4:26 PM +0800" >Mar 7<i class="unloaded">2024-03-07T16:26:16+08:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="932 words">5 min read</span></div></div><div class="post-content"><h3 id="protocol-组合">protocol 组合</h3><p>其实 Any 是 protocol&lt;&gt; 的同名写法，可以用来表示任意类型。protocol&lt;&gt; 的标准语法形式是：<code class="language-plaintext highlighter-rouge">protocol&lt;ProtocolA, ProtocalB&gt;</code>。protocol 组合是可以使用 typealias 来命名的，这样可以提高我们的代码可读性：</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">typealise</span> <span class="kt">ServerType</span> <span class="o">=</span> <span class="kd">protocol</span><span class="o">&lt;</span><span class="kt">URLDestination</span><span class="p">,</span> <span class="kt">DataResolver</span><span class="o">&gt;</span>
+</pre></table></code></div></div><h3 id="可选接口-optional-protocol">可选接口 (optional protocol)</h3><p>一种方法是标记 protocol 为<code class="language-plaintext highlighter-rouge">@objc</code>, 则可以使用 Objective-C 中的关键字<code class="language-plaintext highlighter-rouge">optional</code>:</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kd">@objc</span> <span class="kd">protocol</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span>
+  <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">optionalMethod</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>但是缺点是,<code class="language-plaintext highlighter-rouge">@objc</code>修饰的 protocol 只能提供给类使用,struct 和 enum 不能继承。我们可以用另一种办法 extension protocol,给 protocol 的方法提供默认实现。</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">optionalMethod</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">optionalMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="o">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">Class</span> <span class="kt">A</span><span class="p">:</span> <span class="kt">OptionalProtocol</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="kt">A</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">optionalMethod</span><span class="p">()</span>
+</pre></table></code></div></div><p>接口扩展之后,类实现接口的默认方法实现,即是扩展里的实现方法。这个写法也有个<strong>坏处</strong>,其他的使用者可能会不了解接口已经做过扩展,所以协议和扩展尽量写在同一个文件中,并注释清楚。</p><h3 id="protocol-扩展和方法覆盖">protocol 扩展和方法覆盖</h3><p>protocol 扩展可以为 protocol 类型提供额外的方法实现，就如 optional 实现原理一样。我们也可以在具体类的实现中覆盖这些方法：</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">Progress</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">start</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">Progress</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"nothing"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Request</span><span class="p">:</span> <span class="kt">Progress</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"request"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">req</span> <span class="o">=</span> <span class="kt">Request</span><span class="p">()</span>
+<span class="n">req</span><span class="o">.</span><span class="nf">start</span><span class="p">()</span>   
+<span class="c1">// Print:</span>
+<span class="c1">// request</span>
+</pre></table></code></div></div><p>那现在再给 Progress 扩展一个定义中不含有的方法：</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="kd">extension</span> <span class="kt">Progress</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">cancel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"nothing"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Request</span><span class="p">:</span> <span class="kt">Progress</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"request"</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="kd">func</span> <span class="nf">cancel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"cancel"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">req</span> <span class="o">=</span> <span class="kt">Request</span><span class="p">()</span>
+<span class="n">req</span><span class="o">.</span><span class="nf">cancel</span><span class="p">()</span>                  <span class="o">==&gt;</span>  <span class="nf">cancel</span>
+<span class="p">(</span><span class="n">req</span> <span class="k">as</span> <span class="kt">Progress</span><span class="p">)</span><span class="o">.</span><span class="nf">cancel</span><span class="p">()</span>  <span class="o">==&gt;</span>  <span class="n">nothing</span>
+</pre></table></code></div></div><p>可以看到，对于类和接口里都实现了方法，且方法不在接口定义中时，实际调用时根据当前类型判断的，如果是 Request 则调用类中的方法，如果是 Protocol 则调用协议扩展中的方法。</p><h3 id="protocol-assosiated-type">Protocol Assosiated Type</h3><p>我们可以在 protocol 中添加一个 <code class="language-plaintext highlighter-rouge">associatedtype</code> 类型关联，实现协议的类型需要完成协议中的类型指定。</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">StorableInfo</span> <span class="p">{</span>
+  <span class="kd">associatedtype</span> <span class="kt">InfoKey</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Request</span><span class="p">:</span> <span class="kt">StorableInfo</span> <span class="p">{</span>
+  <span class="kd">typealias</span> <span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">String</span>
+  <span class="k">var</span> <span class="nv">storedInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>在 Swift 4.0 中引入了 <code class="language-plaintext highlighter-rouge">where</code> 条件语句, 这样就可以更加灵活的运用一些泛型类型。</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">StorableInfo</span> <span class="p">{</span>
+  <span class="kd">associatedtype</span> <span class="kt">InfoKey</span> <span class="k">where</span> <span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">Hashable</span>
+<span class="p">}</span>
+
+<span class="c1">// 在以前是编译不通过的，因为 M.InfoKey 不一定符合 Hashable</span>
+<span class="kd">class</span> <span class="kt">Request</span><span class="o">&lt;</span><span class="kt">M</span><span class="p">:</span> <span class="kt">StorableInfo</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">stroedInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">M</span><span class="o">.</span><span class="kt">InfoKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="selfself-和-type">Self、.self 和 .Type</h3><ul><li>.self 实际上是返回当前对象，如果是类型就返回当前类的元类型：</ul><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="k">let</span> <span class="nv">user</span> <span class="o">=</span> <span class="kt">User</span><span class="p">()</span>
+<span class="n">user</span><span class="o">.</span><span class="k">self</span> <span class="o">==</span> <span class="n">user</span>  <span class="c1">// ==&gt; true</span>
+
+<span class="k">let</span> <span class="nv">userType</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="k">self</span>  <span class="c1">// User.Type</span>
+</pre></table></code></div></div><ul><li>Self 一般使用在接口中，用来表明实现接口本身的对象：</ul><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="kd">protocol</span> <span class="kt">Producer</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">User</span><span class="p">:</span> <span class="kt">Producer</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>这里有个问题，使用 self.init() 返回才能符合 Self，而不能使用 User() ，虽然这里 User 和 Self 等价。原因是在 non-final class 中实现方法，这个类是有可能被继承的，而如果使用 User() 这种写法，显然子类调用之后就不会返回子类的对象了。</p></blockquote><ul><li>.Type 是表明一个类的元类型，现在可以使用<code class="language-plaintext highlighter-rouge">type(of:)</code>方法来获得指定实例的元类型：</ul><div class="language-swift highlighter-rouge"><div class="code-header"> <span text-data=" Swift "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">let</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">User</span><span class="o">.</span><span class="k">Type</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="k">self</span>
+<span class="k">let</span> <span class="nv">metaType</span> <span class="o">=</span> <span class="nf">type</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="n">user</span><span class="p">)</span>    <span class="o">===&gt;</span> <span class="kt">User</span><span class="o">.</span><span class="k">Type</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/tech/'>Tech</a>, <a href='/categories/swift/'>Swift</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/swift/" class="post-tag no-text-decoration" >Swift</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Swift Tips (3) - Protocol - Klein Mioke&url=https://mioke.github.io/posts/Swift-Tips-(3)/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Swift Tips (3) - Protocol - Klein Mioke&u=https://mioke.github.io/posts/Swift-Tips-(3)/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Swift Tips (3) - Protocol - Klein Mioke&url=https://mioke.github.io/posts/Swift-Tips-(3)/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/How-to-make-macro-available-from-CocoaPods/">How to make Swift Macro available using CocoaPods</a><li><a href="/posts/Swift-Tips-(3)/">Swift Tips (3) - Protocol</a><li><a href="/posts/Talk-abould-the-politics/">When we talk about politics</a><li><a href="/posts/Why-we-struggled-using-navite-code-to-build-apps/">Why we struggled using native code to build apps</a><li><a href="/posts/Swift-Tips-(2)/">Swift Tips (2) - Standards</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/frp/">FRP</a> <a class="post-tag" href="/tags/reactiveswift/">ReactiveSwift</a> <a class="post-tag" href="/tags/rxswift/">RxSwift</a> <a class="post-tag" href="/tags/view-points/">View Points</a> <a class="post-tag" href="/tags/codable/">Codable</a> <a class="post-tag" href="/tags/functional/">Functional</a> <a class="post-tag" href="/tags/pop/">POP</a> <a class="post-tag" href="/tags/rust/">Rust</a> <a class="post-tag" href="/tags/tech/">Tech</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/Swift-Tips-(2)/"><div class="card-body"> <span class="timeago small" >Jun 7, 2018<i class="unloaded">2018-06-07T15:35:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Swift Tips (2) - Standards</h3><div class="text-muted small"><p> 方法参数命名规范 由于Objective-C API的命名转换，到Swift API的更新，现在（Swift 4.0）我们更应该使用靠近Swift系统的命名方式： func convert(_ point: CGPoint, from view: UIView?) -&gt; CGPoint 不符合规范的：func convertPoint(_ point: CGPoint, ...</p></div></div></a></div><div class="card"> <a href="/posts/Swift-Codable/"><div class="card-body"> <span class="timeago small" >Jun 13, 2018<i class="unloaded">2018-06-13T10:55:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Codable introduced in Swift 4.0</h3><div class="text-muted small"><p> Swift Codable Codable 其实是组合协议： 1 typealiase Codable = Encodable &amp; Decodable Swift 基础库中的 Codable、JSONEncoder、PropertiesListEncoder 给我们提供了日常所用的基础功能。使用起来也很简单，以 JSONEncoder 为例。 1 2 3 4 5 6 7 8...</p></div></div></a></div><div class="card"> <a href="/posts/The-some-in-Swift/"><div class="card-body"> <span class="timeago small" >Nov 12, 2021<i class="unloaded">2021-11-12T15:20:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>The some in Swift</h3><div class="text-muted small"><p> Swift 5 introduced the “Opaque Type” and see how wrong did I think about it. 我的思路遇到了什么问题 最先开始我以为 some 是一个类似于 ObjC 中 __kindof 的标识，意识到我的错误是在一段时间之后了。 说明这个过程和 some 的用法我们需要从我先入为主的乱用开始说起（开始废话了）。 ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/Swift-Tips-(2)/" class="btn btn-outline-primary" prompt="Older"><p>Swift Tips (2) - Standards</p></a> <a href="/posts/Swift-Codable/" class="btn btn-outline-primary" prompt="Newer"><p>Codable introduced in Swift 4.0</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="Mioke/mioke.github.io.comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Mioke">Klein</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/frp/">FRP</a> <a class="post-tag" href="/tags/reactiveswift/">ReactiveSwift</a> <a class="post-tag" href="/tags/rxswift/">RxSwift</a> <a class="post-tag" href="/tags/view-points/">View Points</a> <a class="post-tag" href="/tags/codable/">Codable</a> <a class="post-tag" href="/tags/functional/">Functional</a> <a class="post-tag" href="/tags/pop/">POP</a> <a class="post-tag" href="/tags/rust/">Rust</a> <a class="post-tag" href="/tags/tech/">Tech</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/lozad/dist/lozad.min.js,npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.16.1,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id="></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ''); }); </script>

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="day-prompt" content="days ago"><meta name="hour-prompt" content="hours ago"><meta name="minute-prompt" content="minutes ago"><meta name="justnow-prompt" content="just now"><meta name="generator" content="Jekyll v4.3.3" /><meta property="og:title" content="Nginx Deployment on Mac OS" /><meta property="og:locale" content="en" /><meta name="description" content="Mac OS下安装及配置nginx" /><meta property="og:description" content="Mac OS下安装及配置nginx" /><link rel="canonical" href="https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/" /><meta property="og:url" content="https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/" /><meta property="og:site_name" content="Klein Mioke" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-03-22T18:02:09+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Nginx Deployment on Mac OS" /><meta name="twitter:site" content="@Klein_Mioke" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-11-05T10:38:53+08:00","datePublished":"2017-03-22T18:02:09+08:00","description":"Mac OS下安装及配置nginx","headline":"Nginx Deployment on Mac OS","mainEntityOfPage":{"@type":"WebPage","@id":"https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/"},"url":"https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/"}</script><title>Nginx Deployment on Mac OS | Klein Mioke</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Klein Mioke"><meta name="application-name" content="Klein Mioke"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end" lang="en"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="https://github.com/Mioke/mioke.github.io/raw/master/assets/img/avatar/avatar.JPG" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Klein Mioke</a></div><div class="site-subtitle font-italic">Klein's Memory Castle</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/Mioke" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/Klein_Mioke" aria-label="twitter" class="order-4" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['mioke0428','gmail.com'].join('@')" aria-label="email" class="order-5" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Nginx Deployment on Mac OS</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Nginx Deployment on Mac OS</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> Klein </span> on <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Wed, Mar 22, 2017, 6:02 PM +0800" >Mar 22, 2017<i class="unloaded">2017-03-22T18:02:09+08:00</i> </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Fri, Nov 5, 2021, 10:38 AM +0800" >Nov 5, 2021<i class="unloaded">2021-11-05T10:38:53+08:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="995 words">5 min read</span></div></div><div class="post-content"><h2 id="mac-os下安装及配置nginx">Mac OS下安装及配置nginx</h2><h3 id="安装包">安装包</h3><ul><li><p>下载 Nginx 源码包</p><p>下载页: http://nginx.org/en/download.html</p><p>当前稳定版本: http://nginx.org/download/nginx-1.8.1.tar.gz</p><li><p>zlib</p><p>下载页: http://zlib.net/</p><p>当前稳定版本: http://zlib.net/zlib-1.2.8.tar.gz</p><p>注: Nginx 参考文档中提到需要 1.1.3 以上版本的 zlib</p><li><p>pcre</p><p>下载页: http://www.pcre.org/</p><p>当前稳定版本: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz</p><p>注: Nginx 参考文档中提到需要 4.4 以上版本的 pcre</p></ul><h3 id="配置及安装">配置及安装</h3><ul><li><strong>First, 进入到包所在的文件夹内</strong><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Text "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>tar zxvf zlib-1.2.8.tar.gz  # 得到 zlib-1.2.8 目录
+tar zxvf pcre-8.36.tar.gz  # 得到 pcre-8.36 目录
+</pre></table></code></div></div><li><p>编译安装 Nginx</p><p>这里会将各依赖的源码编译进 Nginx, 所以 –with-zlib 和 –with-pcre 后为对应的依赖源码目录路径。此外, 编译选项中还开启了 HTTPS 的协议支持–with-http_ssl_module, 若不需要 HTTPS, 可取消该选项。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Text "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  tar zxvf nginx-1.8.0.tar.gz
+  cd nginx-1.8.0
+  ./configure --prefix=/usr/local/nginx --with-zlib=../zlib-1.2.8 --with-pcre=../pcre-8.36
+  make
+  sudo make install
+</pre></table></code></div></div><li>其他安装指令（可做了解）<div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Text "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>  nginx大部分常用模块，编译时./configure --help以--without开头的都默认安装。
+    
+  --prefix=PATH ： 指定nginx的安装目录。默认 /usr/local/nginx
+  --conf-path=PATH ： 设置nginx.conf配置文件的路径。nginx允许使用不同的配置文件启动，通过命令行中的-c选项。默认为prefix/conf/nginx.conf
+  --user=name： 设置nginx工作进程的用户。安装完成后，可以随时在nginx.conf配置文件更改user指令。默认的用户名是nobody。--group=name类似
+  --with-pcre ： 设置PCRE库的源码路径，如果已通过yum方式安装，使用--with-pcre自动找到库文件。使用--with-pcre=PATH时，需要从PCRE网站下载pcre库的源码（版本4.4 - 8.30）并解压，剩下的就交给Nginx的./configure和make来完成。perl正则表达式使用在location指令和 ngx_http_rewrite_module模块中。
+  --with-zlib=PATH ： 指定 zlib（版本1.1.3 - 1.2.5）的源码解压目录。在默认就启用的网络传输压缩模块ngx_http_gzip_module时需要使用zlib 。
+  --with-http_ssl_module ： 使用https协议模块。默认情况下，该模块没有被构建。前提是openssl与openssl-devel已安装
+  --with-http_stub_status_module ： 用来监控 Nginx 的当前状态
+  --with-http_realip_module ： 通过这个模块允许我们改变客户端请求头中客户端IP地址值(例如X-Real-IP 或 X-Forwarded-For)，意义在于能够使得后台服务器记录原始客户端的IP地址
+  --add-module=PATH ： 添加第三方外部模块，如nginx-sticky-module-ng或缓存模块。每次添加新的模块都要重新编译（Tengine可以在新加入module时无需重新编译）
+</pre></table></code></div></div><p>比如：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Text "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre>  ./configure \
+  &gt; --prefix=/usr \
+  &gt; --sbin-path=/usr/sbin/nginx \
+  &gt; --conf-path=/etc/nginx/nginx.conf \
+  &gt; --error-log-path=/var/log/nginx/error.log \
+  &gt; --http-log-path=/var/log/nginx/access.log \
+  &gt; --pid-path=/var/run/nginx/nginx.pid  \
+     &gt; --lock-path=/var/lock/nginx.lock \   
+  &gt; --user=nginx \
+  &gt; --group=nginx \
+  &gt; --with-http_ssl_module \
+  &gt; --with-http_stub_status_module \
+  &gt; --with-http_gzip_static_module \
+  &gt; --http-client-body-temp-path=/var/tmp/nginx/client/ \
+  &gt; --http-proxy-temp-path=/var/tmp/nginx/proxy/ \
+  &gt; --http-fastcgi-temp-path=/var/tmp/nginx/fcgi/ \
+  &gt; --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
+  &gt; --with-pcre=../pcre-7.8
+  &gt; --with-zlib=../zlib-1.2.3
+</pre></table></code></div></div></ul><h3 id="设置监听">设置监听</h3><p>进入配置文件/usr/local/nginx/conf/nginx.conf ，修改listen下参数：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Text "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre>server {
+        listen       85;            #监听端口
+        server_name  localhost;     #监听服务器
+
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+</pre></table></code></div></div><h3 id="启动nginx">启动nginx</h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Text "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>cd /usr/local/nginx
+
+#启动
+sudo sbin/nginx     #浏览器访问 127.0.0.1 测试是否成功启动
+
+#重启
+sudo sbin/nginx -s reload
+
+#停止
+sudo sbin/nginx -s stop
+</pre></table></code></div></div><h3 id="修改返回值">修改返回值</h3><p>以bandwidth请求：</p><p>http://127.0.0.1:8001/v2/bandwidth</p><p>按照请求的格式创建目录为：/usr/local/nginx/html/v2/ <br /> （/usr/local/nginx/html/为默认目录,/v2/为根据请求格式新建的目录）</p><p>新建bandwidth文件，则文件路径为/usr/local/nginx/html/v2/bandwidth，写入返回值，则构造指定返回报文成功，可按照自己需求进行编辑；</p><p>然后在浏览器中请求这个接口，返回自定义的内容则配置成功。</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/tech/'>Tech</a>, <a href='/categories/server/'>Server</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Nginx Deployment on Mac OS - Klein Mioke&url=https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Nginx Deployment on Mac OS - Klein Mioke&u=https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Nginx Deployment on Mac OS - Klein Mioke&url=https://mioke.github.io/posts/Nginx-depoloyment-on-Mac-OS/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/How-to-make-macro-available-from-CocoaPods/">How to make Swift Macro available using CocoaPods</a><li><a href="/posts/Swift-Tips-(3)/">Swift Tips (3) - Protocol</a><li><a href="/posts/Talk-abould-the-politics/">When we talk about politics</a><li><a href="/posts/Why-we-struggled-using-navite-code-to-build-apps/">Why we struggled using native code to build apps</a><li><a href="/posts/Swift-Tips-(2)/">Swift Tips (2) - Standards</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/frp/">FRP</a> <a class="post-tag" href="/tags/reactiveswift/">ReactiveSwift</a> <a class="post-tag" href="/tags/rxswift/">RxSwift</a> <a class="post-tag" href="/tags/view-points/">View Points</a> <a class="post-tag" href="/tags/codable/">Codable</a> <a class="post-tag" href="/tags/functional/">Functional</a> <a class="post-tag" href="/tags/pop/">POP</a> <a class="post-tag" href="/tags/rust/">Rust</a> <a class="post-tag" href="/tags/tech/">Tech</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/Swift-Tips-(1)/"><div class="card-body"> <span class="timeago small" >Jun 7, 2018<i class="unloaded">2018-06-07T15:27:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Swift Tips (1) - Function</h3><div class="text-muted small"><p> 函数的柯里化 Swift 里可以将方法进行柯里化 (Currying)，这是也就是把接受多个参数的方法进行一些变形，使其更加灵活的方法。 在非函数式的代码时，我们可能会这样写一个方法： 1 2 3 func isNumber(_ base: Int, greaterThan target: Int) -&gt; Bool { return base &gt; target } 同...</p></div></div></a></div><div class="card"> <a href="/posts/Swift-Tips-(2)/"><div class="card-body"> <span class="timeago small" >Jun 7, 2018<i class="unloaded">2018-06-07T15:35:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Swift Tips (2) - Standards</h3><div class="text-muted small"><p> 方法参数命名规范 由于Objective-C API的命名转换，到Swift API的更新，现在（Swift 4.0）我们更应该使用靠近Swift系统的命名方式： 1 func convert(_ point: CGPoint, from view: UIView?) -&gt; CGPoint 不符合规范的：func convertPoint(_ point: CGPoint...</p></div></div></a></div><div class="card"> <a href="/posts/Swift-Tips-(3)/"><div class="card-body"> <span class="timeago small" >Jun 7, 2018<i class="unloaded">2018-06-07T15:55:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Swift Tips (3) - Protocol</h3><div class="text-muted small"><p> protocol 组合 其实 Any 是 protocol&lt;&gt; 的同名写法，可以用来表示任意类型。protocol&lt;&gt; 的标准语法形式是：protocol&lt;ProtocolA, ProtocalB&gt;。protocol 组合是可以使用 typealias 来命名的，这样可以提高我们的代码可读性： 1 typealise ServerType = prot...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/welcome-to-jekyll/" class="btn btn-outline-primary" prompt="Older"><p>Welcome to Jekyll!</p></a> <a href="/posts/Transmissioin-between-Weex-and-iOS-native/" class="btn btn-outline-primary" prompt="Newer"><p>Transmission Between Weex and iOS Native</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="Mioke/mioke.github.io.comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/Mioke">Klein</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/frp/">FRP</a> <a class="post-tag" href="/tags/reactiveswift/">ReactiveSwift</a> <a class="post-tag" href="/tags/rxswift/">RxSwift</a> <a class="post-tag" href="/tags/view-points/">View Points</a> <a class="post-tag" href="/tags/codable/">Codable</a> <a class="post-tag" href="/tags/functional/">Functional</a> <a class="post-tag" href="/tags/pop/">POP</a> <a class="post-tag" href="/tags/rust/">Rust</a> <a class="post-tag" href="/tags/tech/">Tech</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/lozad/dist/lozad.min.js,npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.16.1,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id="></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ''); }); </script>
