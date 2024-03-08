@@ -119,7 +119,7 @@ Key points:
 
 ### Using a script to build a executable
 
-Inspired by [this post](https://www.polpiella.dev/binary-swift-macros), we can also use a script to build the executable.
+Inspired by [this post](https://soumyamahunt.medium.com/support-swift-macros-with-cocoapods-3911f9317042), we can also use a script to build the executable.
 
 We can create another `.podspec` file, which is `SwiftyArchitectureMacros.podspec` in my case, and the key content is below.
 
