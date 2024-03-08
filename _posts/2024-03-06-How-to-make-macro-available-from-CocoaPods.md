@@ -7,7 +7,7 @@ tags: [Tech, Swift, Rust]
 summary: Provide macros to other project's or development pods using CocoaPods instead of using SwiftPM.
 ---
 
-By the release of Swift 5.9, it provide the feature `Swift Macro`, which is really useful for the developer to reduce boilerplate code and helping to improve the readability of the code.
+By the release of Swift 5.9, it provides the feature `Swift Macro`, which is really useful for the developer to reduce boilerplate code and helping to improve the readability of the code.
 
 However, as we know, currently most long running projects are using CocoaPods as their dependency manager, while the Swift Macro support officially relies on SwiftPM. This prevents macros from being directly used in the project code and development pods.
 
@@ -79,7 +79,7 @@ There are some important informations:
 
 2. Second, by several tests, the executable target should contain original macro files, not macro definition files. So it means that the definition of the macro should be contained in the pod we build.
 
-By using this `swift biuld -c release` command, we can get a `SwiftyArchitectureMacros` executable file in `.build/release/`.
+By using this `swift build -c release` command, we can get a `SwiftyArchitectureMacros` executable file in `.build/release/`.
 
 ## Create a pod to host the macro plugin executable
 
@@ -194,7 +194,7 @@ And then it will be a little tricky, because we can't directly insert the `OTHER
 1. In another's podspec, hard code the executable path is not a good idea, because the path may changes when you switching the macro pod between local and remote.
 2. If a lot of pods are depending on the macro pod, when macro pod setting changes you must update all the pods' podspec file which is a big trouble.
 
-So we need to do some tricks. We can use `pod install`'s `post_install` hook to do this. Add these code to your `Podfile`, it aims to add the `OTHER_SWIFT_FLAG` setting to the `Pods.proj`, and all the pod targets will inherit from it.
+So we need to do some tricks. We can use `pod install`'s `post_install` hook to do this. Add these code to your `Podfile`, it aims to add the `OTHER_SWIFT_FLAG` setting to the `Pods.xcodeproj`, and all the pod targets will inherit from it.
 
 ```ruby
 post_install do |installer_representation|
@@ -208,4 +208,4 @@ post_install do |installer_representation|
 end
 ```
 
-Now try `pod install` and see if all the pod targets are inheriting from the `Pods.proj` correctly. If so, you can use the macros in your codes now.
+Now try `pod install` and see if all the pod targets are inheriting correctly from the `Pods.xcodeproj`. If so, you can use the macros in your codes now.
